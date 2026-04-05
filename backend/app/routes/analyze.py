@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from app.models.request_models import AnalyzeRequest
+from app.services.claim_extractor import extract_claims
 
 router = APIRouter()
 
@@ -7,9 +8,12 @@ router = APIRouter()
 def analyze_news(request: AnalyzeRequest):
     text = request.text
 
-    # For now: basic response
+    # Step 1: Extract claims
+    claims = extract_claims(text)
+
     return {
-        "message": "API working",
-        "input_text": text
+        "message": "Claims extracted successfully",
+        "input_text": text,
+        "claims": claims
     }
     
