@@ -1,0 +1,17 @@
+[
+  {
+    "text": "India launched 5G services in 2022",
+    "label": "real",
+    "source": "trusted"
+  },
+  {
+    "text": "Drinking hot water cures cancer",
+    "label": "fake",
+    "source": "myth"
+  },
+  {
+    "text": "The government reduced income tax in 2023",
+    "label": "real",
+    "source": "trusted"
+  }
+]
