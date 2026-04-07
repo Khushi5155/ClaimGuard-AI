@@ -1,7 +1,8 @@
 from fastapi import APIRouter
 from app.models.request_models import AnalyzeRequest
 from app.services.claim_extractor import extract_claims
-from app.services.knowledge_base import load_knowledge_base
+from app.services.knowledge_base import load_knowledge_base, get_all_texts
+from app.services.similarity_engine import analyze_claims
 
 router = APIRouter()
 
@@ -13,12 +14,16 @@ def analyze_news(request: AnalyzeRequest):
     claims = extract_claims(text)
 
     # Step 2: Load knowledge base
-    knowledge_base = load_knowledge_base()
+    kb = load_knowledge_base()
+    kb_texts = get_all_texts(kb)
+
+    # Step 3: Compare claims
+    similarity_results = analyze_claims(claims, kb_texts)
 
     return {
-        "message": "Claims + Knowledge Base loaded",
+        "message": "Phase 4 working: Similarity Engine",
         "input_text": text,
         "claims": claims,
-        "knowledge_base_size": len(knowledge_base)
+        "analysis": similarity_results
     }
     
