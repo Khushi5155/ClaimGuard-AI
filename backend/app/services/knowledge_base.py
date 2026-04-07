@@ -12,4 +12,7 @@ def load_knowledge_base():
     except Exception as e:
         print("Error loading knowledge base:", e)
         return []
-        
+
+def get_all_texts(knowledge_base):
+    return [item["text"] for item in knowledge_base if "text" in item]
+     
