@@ -1,4 +1,4 @@
-def calculate_truth_score(similarity_results, context_flags):
+def calculate_truth_score(similarity_results, context_flags, source_score=None):
     if not similarity_results:
         return {
             "truth_score": 0,
@@ -10,10 +10,9 @@ def calculate_truth_score(similarity_results, context_flags):
     avg_similarity = sum([item["similarity_score"] for item in similarity_results]) / len(similarity_results)
 
     score = avg_similarity * 100
-
     reasons = []
 
-    # Rule-based reasoning
+    # Similarity reasoning
     if avg_similarity > 0.75:
         reasons.append("High similarity with trusted data")
     elif avg_similarity > 0.5:
@@ -30,7 +29,16 @@ def calculate_truth_score(similarity_results, context_flags):
         score -= 15
         reasons.append("Contains unrealistic claims")
 
-    # Clamp score
+    # 🆕 Source credibility impact
+    if source_score is not None:
+        score = (score * 0.8) + (source_score * 0.2)
+
+        if source_score > 80:
+            reasons.append("Source is highly credible")
+        elif source_score < 40:
+            reasons.append("Source is low credibility")
+
+    # Clamp
     score = max(0, min(100, score))
 
     # Verdict
