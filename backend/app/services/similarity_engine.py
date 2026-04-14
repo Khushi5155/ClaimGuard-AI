@@ -1,8 +1,10 @@
 from sentence_transformers import SentenceTransformer, util
 
-# 🔥 Load model only once (global)
-model = SentenceTransformer('all-MiniLM-L6-v2')
-
+try:
+    model = SentenceTransformer('all-MiniLM-L6-v2')
+except Exception as e:
+    print("Model loading failed. Check internet or download model manually.")
+    model = None
 
 # 🔥 Cache for knowledge base embeddings
 kb_cache = {
@@ -37,6 +39,14 @@ def find_best_match(claim: str, kb_texts: list):
     Finds the most similar text from knowledge base
     for a given claim.
     """
+
+    if model is None:
+        return {
+            "claim": claim,
+            "best_match": None,
+            "similarity_score": 0
+    }
+
     if not kb_texts or not claim:
         return None
 
