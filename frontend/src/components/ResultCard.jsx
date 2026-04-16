@@ -37,6 +37,16 @@ function ResultCard({ data }) {
         </div>
       </div>
 
+      <div className="mb-6 flex justify-between text-sm">
+        <span>Total: {data.claim_summary?.total}</span>
+        <span className="text-green-600">
+          Real: {data.claim_summary?.real}
+        </span>
+        <span className="text-red-600">
+          Fake: {data.claim_summary?.fake}
+        </span>
+      </div>
+
       {/* Verdict */}
       <div className="mb-6">
         <p className="font-semibold text-lg">Verdict:</p>
@@ -45,16 +55,28 @@ function ResultCard({ data }) {
         </p>
       </div>
 
-      {/* Claims */}
       <div className="mb-6">
-        <p className="font-semibold mb-2">Extracted Claims</p>
-        <div className="space-y-2">
-          {claims?.map((c, i) => (
-            <div
-              key={i}
-              className="bg-gray-100 p-3 rounded-lg text-sm"
-            >
-              {c}
+        <p className="font-semibold mb-2">Claim Analysis</p>
+
+        <div className="space-y-3">
+          {data.analysis?.map((item, i) => (
+            <div key={i} className="bg-gray-100 p-3 rounded-lg">
+
+              <p className="font-medium">{item.claim}</p>
+
+              <p className="text-sm text-gray-600">
+                Match: {item.best_match}
+              </p>
+
+              <p className={`text-sm font-semibold ${item.status === "Likely Real"
+                  ? "text-green-600"
+                  : item.status === "Uncertain"
+                    ? "text-yellow-600"
+                    : "text-red-600"
+                }`}>
+                {item.status} ({(item.similarity_score * 100).toFixed(1)}%)
+              </p>
+
             </div>
           ))}
         </div>
