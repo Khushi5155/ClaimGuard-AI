@@ -39,7 +39,8 @@ def analyze_news(request: AnalyzeRequest):
 
     if not claims:
         return {
-        "message": "No valid claims found",
+        "me
+        ssage": "No valid claims found",
         "input_text": text
     }
 
@@ -50,5 +51,10 @@ def analyze_news(request: AnalyzeRequest):
         "context_flags": context_flags,
         "source_info": source_info,
         "final_result": final_result
+        "claim_summary": {
+            "total": len(similarity_results),
+            "real": sum(1 for c in similarity_results if c["status"] == "Likely Real"),
+            "fake": sum(1 for c in similarity_results if c["status"] == "Likely Fake")
+            }
     }
     
