@@ -27,7 +27,7 @@ def analyze_news(request: AnalyzeRequest):
     # Step 4: Context
     context_flags = analyze_context(text)
 
-    # 🆕 Step 5: Source credibility
+    #  Step 5: Source credibility
     source_info = get_source_score(url)
 
     # Step 6: Final scoring
@@ -36,6 +36,12 @@ def analyze_news(request: AnalyzeRequest):
         context_flags,
         source_info["source_score"]
     )
+
+    if not claims:
+        return {
+        "message": "No valid claims found",
+        "input_text": text
+    }
 
     return {
         "input_text": text,
