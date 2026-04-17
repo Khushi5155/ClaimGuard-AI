@@ -6,6 +6,7 @@ from app.services.similarity_engine import analyze_claims
 from app.services.context_analyzer import analyze_context
 from app.services.scoring_engine import calculate_truth_score
 from app.services.source_checker import get_source_score
+from app.services.evidence_retriever import get_evidence_for_claims
 
 router = APIRouter()
 
@@ -37,6 +38,8 @@ def analyze_news(request: AnalyzeRequest):
         source_info["source_score"]
     )
 
+    evidence_results = get_evidence_for_claims(claims)
+
     if not claims:
         return {
         "me
@@ -48,13 +51,14 @@ def analyze_news(request: AnalyzeRequest):
         "input_text": text,
         "claims": claims,
         "analysis": similarity_results,
+        "evidence": evidence_results,
         "context_flags": context_flags,
         "source_info": source_info,
-        "final_result": final_result
         "claim_summary": {
             "total": len(similarity_results),
             "real": sum(1 for c in similarity_results if c["status"] == "Likely Real"),
             "fake": sum(1 for c in similarity_results if c["status"] == "Likely Fake")
-            }
+            },
+          "final_result": final_result
     }
     

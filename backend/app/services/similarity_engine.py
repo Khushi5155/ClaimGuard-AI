@@ -80,4 +80,19 @@ def analyze_claims(claims, kb_texts):
             results.append(match)
 
     return results
-    
+
+ def compare_with_evidence(claim, evidence_text):
+    if model is None or not evidence_text:
+        return None
+
+    try:
+        claim_embedding = model.encode(claim, convert_to_tensor=True)
+        evidence_embedding = model.encode(evidence_text, convert_to_tensor=True)
+
+        score = util.cos_sim(claim_embedding, evidence_embedding)[0][0]
+
+        return round(float(score), 4)
+
+    except:
+        return None
+           
