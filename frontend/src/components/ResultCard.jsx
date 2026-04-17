@@ -69,13 +69,42 @@ function ResultCard({ data }) {
               </p>
 
               <p className={`text-sm font-semibold ${item.status === "Likely Real"
-                  ? "text-green-600"
-                  : item.status === "Uncertain"
-                    ? "text-yellow-600"
-                    : "text-red-600"
+                ? "text-green-600"
+                : item.status === "Uncertain"
+                  ? "text-yellow-600"
+                  : "text-red-600"
                 }`}>
                 {item.status} ({(item.similarity_score * 100).toFixed(1)}%)
               </p>
+
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mb-6">
+        <p className="font-semibold mb-2">Evidence (Wikipedia)</p>
+
+        <div className="space-y-3">
+          {data.evidence?.map((item, i) => (
+            <div key={i} className="bg-gray-50 p-3 rounded-lg">
+
+              <p className="font-medium">{item.claim}</p>
+
+              {item.evidence ? (
+                <>
+                  <p className="text-sm text-blue-600">
+                    {item.evidence.title}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {item.evidence.evidence}
+                  </p>
+                </>
+              ) : (
+                <p className="text-sm text-red-500">
+                  No evidence found
+                </p>
+              )}
 
             </div>
           ))}
