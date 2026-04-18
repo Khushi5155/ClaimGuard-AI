@@ -27,7 +27,7 @@ function InputForm({ setResult }) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-md w-full max-w-xl">
+    <div className="bg-gray-900 p-6 rounded-2xl shadow-lg border border-gray-800 w-full max-w-xl">
       <h2 className="text-xl font-semibold mb-4">Analyze News</h2>
 
       <textarea
@@ -49,7 +49,8 @@ function InputForm({ setResult }) {
       <button
         onClick={handleSubmit}
         disabled={loading}
-        className={`w-full py-2 rounded-lg text-white transition ${
+        className={`w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 rounded-lg hover:opacity-90 transition ${
+       
           loading
             ? "bg-gray-400 cursor-not-allowed"
             : "bg-blue-600 hover:bg-blue-700"

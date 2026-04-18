@@ -17,25 +17,27 @@ function ResultCard({ data }) {
   };
 
   return (
-    <div className="bg-white p-6 mt-6 rounded-2xl shadow-xl w-full max-w-2xl">
+    <div className="bg-gray-900 p-6 mt-6 rounded-2xl shadow-xl border border-gray-800 w-full max-w-2xl">
 
       {/* Header */}
       <h2 className="text-2xl font-bold mb-4">Analysis Result</h2>
 
       {/* Score Section */}
-      <div className="mb-6">
-        <div className="flex justify-between items-center">
-          <p className="font-semibold">Truth Score</p>
-          <p className={`font-bold ${getTextColor()}`}>{score}%</p>
-        </div>
+      <div className="grid grid-cols-2 gap-4 mb-6">
 
-        <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
-          <div
-            className={`${getColor()} h-4 rounded-full transition-all duration-700`}
-            style={{ width: `${score}%` }}
-          ></div>
-        </div>
-      </div>
+  <div className="bg-gray-800 p-4 rounded-xl">
+    <p className="text-gray-400 text-sm">Truth Score</p>
+    <p className="text-2xl font-bold">{score}%</p>
+  </div>
+
+  <div className="bg-gray-800 p-4 rounded-xl">
+    <p className="text-gray-400 text-sm">Verdict</p>
+    <p className={`text-lg font-bold ${getTextColor()}`}>
+      {final_result?.verdict}
+    </p>
+  </div>
+
+</div>
 
       <div className="mb-6 flex justify-between text-sm">
         <span>Total: {data.claim_summary?.total}</span>
